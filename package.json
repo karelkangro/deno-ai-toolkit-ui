@@ -1,6 +1,6 @@
 {
   "name": "@karelkangro/deno-ai-toolkit-ui",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Admin UI components for Deno AI Toolkit workspace management",
   "type": "module",
   "main": "./dist/index.js",
