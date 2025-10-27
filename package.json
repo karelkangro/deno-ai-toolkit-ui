@@ -28,7 +28,8 @@
     "format": "prettier --write \"src/**/*.{ts,tsx,json}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,json}\"",
     "precommit": "yarn type-check && yarn lint && yarn format:check",
-    "prepare": "husky"
+    "prepare": "husky",
+    "prepublishOnly": "yarn precommit && yarn build"
   },
   "peerDependencies": {
     "@tanstack/react-query": "^5.90.0",
