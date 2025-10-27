@@ -1,29 +1,28 @@
 import type { AgentType } from "../types";
 
-const AGENT_TYPES: { value: AgentType; label: string }[] = [
-  { value: "architecture", label: "Architecture" },
-  { value: "structural", label: "Structural Engineering" },
-  { value: "electrical", label: "Electrical Engineering" },
-  { value: "hvac", label: "HVAC Engineering" },
-  { value: "plumbing", label: "Plumbing Engineering" },
-  { value: "interior", label: "Interior Design" },
-  { value: "projectManagement", label: "Project Management" },
-  { value: "ecommerce", label: "E-commerce & Surveys" },
-];
+export interface AgentTypeOption {
+  value: AgentType;
+  label: string;
+}
 
-export const useWorkspaceFormatters = () => {
+export const useWorkspaceFormatters = (agentTypes?: AgentTypeOption[]) => {
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString();
   };
 
   const getAgentTypeLabel = (agentType: AgentType) => {
-    return (
-      AGENT_TYPES.find((type) => type.value === agentType)?.label || agentType
-    );
+    if (agentTypes) {
+      return (
+        agentTypes.find((type) => type.value === agentType)?.label || agentType
+      );
+    }
+    // Fallback: return the value as-is if no types provided
+    return agentType;
   };
 
   return {
     formatDate,
     getAgentTypeLabel,
+    agentTypes,
   };
 };
