@@ -1,1 +1,1 @@
-export * from './workspaceClient';
+export * from "./workspaceClient";

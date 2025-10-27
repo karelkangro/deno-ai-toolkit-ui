@@ -14,7 +14,7 @@ export interface ApiConfig {
 }
 
 export interface UIConfig {
-  theme?: 'light' | 'dark' | 'auto';
+  theme?: "light" | "dark" | "auto";
   locale?: string;
   dateFormat?: string;
   translations?: Record<string, Record<string, string>>;
@@ -34,19 +34,19 @@ export interface WorkspaceUIConfig {
 }
 
 export const DEFAULT_API_CONFIG: ApiConfig = {
-  baseUrl: '',
+  baseUrl: "",
   endpoints: {
-    workspaces: '/api/workspaces',
-    workspaceData: '/api/workspace-data',
-    embeddings: '/api/embeddings'
+    workspaces: "/api/workspaces",
+    workspaceData: "/api/workspace-data",
+    embeddings: "/api/embeddings",
   },
-  timeout: 30000
+  timeout: 30000,
 };
 
 export const DEFAULT_UI_CONFIG: UIConfig = {
-  theme: 'auto',
-  locale: 'en',
-  dateFormat: 'yyyy-MM-dd'
+  theme: "auto",
+  locale: "en",
+  dateFormat: "yyyy-MM-dd",
 };
 
 export const DEFAULT_FEATURES = {
@@ -56,9 +56,9 @@ export const DEFAULT_FEATURES = {
   enableSchema: true,
   maxFileSize: 50 * 1024 * 1024, // 50MB
   allowedFileTypes: [
-    'application/pdf',
-    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'application/msword',
-    'text/plain'
-  ]
+    "application/pdf",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+    "application/msword",
+    "text/plain",
+  ],
 };

@@ -1,7 +1,7 @@
-import { createContext, useContext, type ReactNode } from 'react';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createWorkspaceClient, type WorkspaceClient } from '../api';
-import type { WorkspaceUIConfig } from '../types';
+import { createContext, useContext, type ReactNode } from "react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { createWorkspaceClient, type WorkspaceClient } from "../api";
+import type { WorkspaceUIConfig } from "../types";
 
 interface WorkspaceContextValue {
   client: WorkspaceClient;
@@ -69,7 +69,7 @@ export function WorkspaceProvider({
 export function useWorkspaceClient(): WorkspaceClient {
   const context = useContext(WorkspaceContext);
   if (!context) {
-    throw new Error('useWorkspaceClient must be used within WorkspaceProvider');
+    throw new Error("useWorkspaceClient must be used within WorkspaceProvider");
   }
   return context.client;
 }
@@ -81,7 +81,7 @@ export function useWorkspaceClient(): WorkspaceClient {
 export function useWorkspaceConfig(): WorkspaceUIConfig {
   const context = useContext(WorkspaceContext);
   if (!context) {
-    throw new Error('useWorkspaceConfig must be used within WorkspaceProvider');
+    throw new Error("useWorkspaceConfig must be used within WorkspaceProvider");
   }
   return context.config;
 }

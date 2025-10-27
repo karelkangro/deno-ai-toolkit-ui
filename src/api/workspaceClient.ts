@@ -5,10 +5,9 @@ import type {
   UpdateWorkspaceRequest,
   WorkspaceStatsData,
   KnowledgeBaseFile,
-  ApiResponse,
   ApiConfig,
-  EmbeddingStatus
-} from '../types';
+  EmbeddingStatus,
+} from "../types";
 
 /**
  * Creates a configurable workspace API client
@@ -19,10 +18,10 @@ export function createWorkspaceClient(config: ApiConfig) {
   const { baseUrl, endpoints, headers = {}, timeout = 30000 } = config;
 
   const defaultEndpoints = {
-    workspaces: '/api/workspaces',
-    workspaceData: '/api/workspace-data',
-    embeddings: '/api/embeddings',
-    ...endpoints
+    workspaces: "/api/workspaces",
+    workspaceData: "/api/workspace-data",
+    embeddings: "/api/embeddings",
+    ...endpoints,
   };
 
   const getApiUrl = (endpoint: string) => `${baseUrl}${endpoint}`;
@@ -37,8 +36,8 @@ export function createWorkspaceClient(config: ApiConfig) {
         signal: controller.signal,
         headers: {
           ...headers,
-          ...options.headers
-        }
+          ...options.headers,
+        },
       });
       clearTimeout(timeoutId);
       return response;
@@ -50,8 +49,12 @@ export function createWorkspaceClient(config: ApiConfig) {
 
   const handleResponse = async <T>(response: Response): Promise<T> => {
     if (!response.ok) {
-      const error = await response.json().catch(() => ({ error: 'Network error' }));
-      throw new Error(error.error || `HTTP ${response.status}: ${response.statusText}`);
+      const error = await response
+        .json()
+        .catch(() => ({ error: "Network error" }));
+      throw new Error(
+        error.error || `HTTP ${response.status}: ${response.statusText}`,
+      );
     }
     return response.json();
   };
@@ -59,116 +62,166 @@ export function createWorkspaceClient(config: ApiConfig) {
   return {
     // Workspace CRUD operations
     async getWorkspaces(): Promise<Workspace[]> {
-      const response = await fetchWithTimeout(getApiUrl(defaultEndpoints.workspaces));
-      const data = await handleResponse<{ workspaces?: Workspace[] } | Workspace[]>(response);
-      return Array.isArray(data) ? data : (data.workspaces || []);
+      const response = await fetchWithTimeout(
+        getApiUrl(defaultEndpoints.workspaces),
+      );
+      const data = await handleResponse<
+        { workspaces?: Workspace[] } | Workspace[]
+      >(response);
+      return Array.isArray(data) ? data : data.workspaces || [];
     },
 
     async getWorkspace(id: string): Promise<Workspace> {
-      const response = await fetchWithTimeout(getApiUrl(`${defaultEndpoints.workspaces}?id=${id}`));
-      const data = await handleResponse<{ workspace?: Workspace } | Workspace>(response);
-      if ('workspace' in data && data.workspace) {
+      const response = await fetchWithTimeout(
+        getApiUrl(`${defaultEndpoints.workspaces}?id=${id}`),
+      );
+      const data = await handleResponse<{ workspace?: Workspace } | Workspace>(
+        response,
+      );
+      if ("workspace" in data && data.workspace) {
         return data.workspace;
       }
       return data as Workspace;
     },
 
     async createWorkspace(data: CreateWorkspaceRequest): Promise<Workspace> {
-      const response = await fetchWithTimeout(getApiUrl(defaultEndpoints.workspaces), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetchWithTimeout(
+        getApiUrl(defaultEndpoints.workspaces),
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
-      const result = await handleResponse<{ workspace?: Workspace } | Workspace>(response);
-      if ('workspace' in result && result.workspace) {
+      );
+      const result = await handleResponse<
+        { workspace?: Workspace } | Workspace
+      >(response);
+      if ("workspace" in result && result.workspace) {
         return result.workspace;
       }
       return result as Workspace;
     },
 
-    async updateWorkspace(id: string, data: UpdateWorkspaceRequest): Promise<Workspace> {
-      const response = await fetchWithTimeout(getApiUrl(`${defaultEndpoints.workspaces}?id=${id}`), {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
+    async updateWorkspace(
+      id: string,
+      data: UpdateWorkspaceRequest,
+    ): Promise<Workspace> {
+      const response = await fetchWithTimeout(
+        getApiUrl(`${defaultEndpoints.workspaces}?id=${id}`),
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
         },
-        body: JSON.stringify(data),
-      });
-      const result = await handleResponse<{ workspace?: Workspace } | Workspace>(response);
-      if ('workspace' in result && result.workspace) {
+      );
+      const result = await handleResponse<
+        { workspace?: Workspace } | Workspace
+      >(response);
+      if ("workspace" in result && result.workspace) {
         return result.workspace;
       }
       return result as Workspace;
     },
 
     async deleteWorkspace(id: string): Promise<void> {
-      const response = await fetchWithTimeout(getApiUrl(`${defaultEndpoints.workspaces}?id=${id}`), {
-        method: 'DELETE',
-      });
+      const response = await fetchWithTimeout(
+        getApiUrl(`${defaultEndpoints.workspaces}?id=${id}`),
+        {
+          method: "DELETE",
+        },
+      );
       await handleResponse<{ success: boolean }>(response);
     },
 
     // Document operations
     async getWorkspaceDocuments(workspaceId: string): Promise<Document[]> {
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=documents`)
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=documents`,
+        ),
       );
-      const data = await handleResponse<{ documents?: Document[] } | Document[]>(response);
-      return Array.isArray(data) ? data : (data.documents || []);
+      const data = await handleResponse<
+        { documents?: Document[] } | Document[]
+      >(response);
+      return Array.isArray(data) ? data : data.documents || [];
     },
 
-    async getKnowledgeBaseFiles(workspaceId: string): Promise<KnowledgeBaseFile[]> {
+    async getKnowledgeBaseFiles(
+      workspaceId: string,
+    ): Promise<KnowledgeBaseFile[]> {
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=knowledge-base`)
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=knowledge-base`,
+        ),
       );
-      const data = await handleResponse<{ documents?: KnowledgeBaseFile[] } | KnowledgeBaseFile[]>(response);
-      return Array.isArray(data) ? data : (data.documents || []);
+      const data = await handleResponse<
+        { documents?: KnowledgeBaseFile[] } | KnowledgeBaseFile[]
+      >(response);
+      return Array.isArray(data) ? data : data.documents || [];
     },
 
     async uploadDocument(workspaceId: string, file: File): Promise<Document> {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append("file", file);
 
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=upload`),
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=upload`,
+        ),
         {
-          method: 'POST',
+          method: "POST",
           body: formData,
-        }
+        },
       );
-      const data = await handleResponse<{ document?: Document } | Document>(response);
-      if ('document' in data && data.document) {
+      const data = await handleResponse<{ document?: Document } | Document>(
+        response,
+      );
+      if ("document" in data && data.document) {
         return data.document;
       }
       return data as Document;
     },
 
-    async embedDocument(workspaceId: string, documentId: string): Promise<Document> {
+    async embedDocument(
+      workspaceId: string,
+      documentId: string,
+    ): Promise<Document> {
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=embed`),
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=embed`,
+        ),
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({ documentId }),
-        }
+        },
       );
-      const data = await handleResponse<{ document?: Document } | Document>(response);
-      if ('document' in data && data.document) {
+      const data = await handleResponse<{ document?: Document } | Document>(
+        response,
+      );
+      if ("document" in data && data.document) {
         return data.document;
       }
       return data as Document;
     },
 
-    async deleteDocument(workspaceId: string, documentId: string): Promise<void> {
+    async deleteDocument(
+      workspaceId: string,
+      documentId: string,
+    ): Promise<void> {
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=document&documentId=${documentId}`),
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=document&documentId=${documentId}`,
+        ),
         {
-          method: 'DELETE',
-        }
+          method: "DELETE",
+        },
       );
       await handleResponse<{ success: boolean }>(response);
     },
@@ -176,7 +229,9 @@ export function createWorkspaceClient(config: ApiConfig) {
     // Stats operations
     async getWorkspaceStats(workspaceId: string): Promise<WorkspaceStatsData> {
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=stats`)
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=stats`,
+        ),
       );
       return handleResponse<WorkspaceStatsData>(response);
     },
@@ -184,20 +239,27 @@ export function createWorkspaceClient(config: ApiConfig) {
     // Embedding operations
     async getEmbedStatus(workspaceId: string): Promise<EmbeddingStatus> {
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=embed-status`)
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=embed-status`,
+        ),
       );
       return handleResponse<EmbeddingStatus>(response);
     },
 
-    async removeEmbedding(workspaceId: string, documentId: string): Promise<void> {
+    async removeEmbedding(
+      workspaceId: string,
+      documentId: string,
+    ): Promise<void> {
       const response = await fetchWithTimeout(
-        getApiUrl(`${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=remove-embedding&documentId=${documentId}`),
+        getApiUrl(
+          `${defaultEndpoints.workspaceData}?workspaceId=${workspaceId}&action=remove-embedding&documentId=${documentId}`,
+        ),
         {
-          method: 'DELETE',
-        }
+          method: "DELETE",
+        },
       );
       await handleResponse<{ success: boolean }>(response);
-    }
+    },
   };
 }
 

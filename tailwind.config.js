@@ -5,22 +5,27 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        // Customizable color palette for workspaces
-        workspace: {
-          primary: 'var(--workspace-primary, #3b82f6)',
-          secondary: 'var(--workspace-secondary, #8b5cf6)',
-          accent: 'var(--workspace-accent, #10b981)',
-          danger: 'var(--workspace-danger, #ef4444)',
-          warning: 'var(--workspace-warning, #f59e0b)',
-          success: 'var(--workspace-success, #10b981)',
-        }
-      },
-      borderRadius: {
-        workspace: 'var(--workspace-radius, 0.5rem)',
-      },
-    },
+    extend: {},
   },
-  plugins: [],
+  plugins: [
+    require('daisyui'),
+  ],
+  daisyui: {
+    themes: [
+      {
+        light: {
+          "primary": "#3b82f6",
+          "secondary": "#8b5cf6",
+          "accent": "#10b981",
+          "neutral": "#3d4451",
+          "base-100": "#ffffff",
+          "info": "#3abff8",
+          "success": "#36d399",
+          "warning": "#fbbd23",
+          "error": "#f87272",
+        },
+      },
+      "dark",
+    ],
+  },
 }

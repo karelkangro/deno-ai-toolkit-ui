@@ -1,22 +1,22 @@
-import { Fragment, type ReactNode } from 'react';
-import { Dialog, Transition } from '@headlessui/react';
-import { clsx } from 'clsx';
+import { Fragment, type ReactNode } from "react";
+import { Dialog, Transition } from "@headlessui/react";
+import { clsx } from "clsx";
 
 export interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title?: string;
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'full';
+  size?: "sm" | "md" | "lg" | "xl" | "full";
   showCloseButton?: boolean;
 }
 
 const sizeClasses = {
-  sm: 'max-w-md',
-  md: 'max-w-lg',
-  lg: 'max-w-2xl',
-  xl: 'max-w-4xl',
-  full: 'max-w-7xl',
+  sm: "max-w-md",
+  md: "max-w-lg",
+  lg: "max-w-2xl",
+  xl: "max-w-4xl",
+  full: "max-w-7xl",
 };
 
 export function Modal({
@@ -24,7 +24,7 @@ export function Modal({
   onClose,
   title,
   children,
-  size = 'md',
+  size = "md",
   showCloseButton = true,
 }: ModalProps) {
   return (
@@ -55,8 +55,8 @@ export function Modal({
             >
               <Dialog.Panel
                 className={clsx(
-                  'relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-full',
-                  sizeClasses[size]
+                  "relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 w-full",
+                  sizeClasses[size],
                 )}
               >
                 {(title || showCloseButton) && (

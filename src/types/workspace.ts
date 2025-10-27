@@ -48,7 +48,7 @@ export interface WorkspaceRule {
   name: string;
   content: string;
   category: string;
-  severity: 'critical' | 'high' | 'medium' | 'low';
+  severity: "critical" | "high" | "medium" | "low";
   enabled: boolean;
   keywords: string[];
   version: number;
@@ -60,7 +60,7 @@ export interface WorkspaceRule {
 
 export interface RuleField {
   name: string;
-  type: 'string' | 'number' | 'boolean' | 'array' | 'object' | 'enum';
+  type: "string" | "number" | "boolean" | "array" | "object" | "enum";
   required: boolean;
   defaultValue?: unknown;
   description?: string;
@@ -86,21 +86,17 @@ export interface RuleSchema {
 }
 
 export type AgentType =
-  | 'architecture'
-  | 'structural'
-  | 'electrical'
-  | 'hvac'
-  | 'plumbing'
-  | 'interior'
-  | 'projectManagement'
-  | 'ecommerce'
-  | 'general';
+  | "architecture"
+  | "structural"
+  | "electrical"
+  | "hvac"
+  | "plumbing"
+  | "interior"
+  | "projectManagement"
+  | "ecommerce"
+  | "general";
 
-export type DocumentStatus =
-  | 'uploaded'
-  | 'processing'
-  | 'embedded'
-  | 'error';
+export type DocumentStatus = "uploaded" | "processing" | "embedded" | "error";
 
 export interface CreateWorkspaceRequest {
   name: string;
@@ -154,7 +150,7 @@ export interface SurveyQuestion {
   id: string;
   workspaceId: string;
   question: string;
-  type: 'text' | 'multiple_choice' | 'rating' | 'boolean';
+  type: "text" | "multiple_choice" | "rating" | "boolean";
   options?: string[];
   required: boolean;
   category: string;
@@ -187,7 +183,7 @@ export interface Product {
   price: number;
   sku: string;
   stock: number;
-  status: 'active' | 'inactive' | 'draft';
+  status: "active" | "inactive" | "draft";
   images: string[];
   metadata?: ProductMetadata;
   createdAt: string;

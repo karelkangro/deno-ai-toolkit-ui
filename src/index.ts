@@ -4,21 +4,19 @@
  */
 
 // Types
-export * from './types';
+export * from "./types";
 
 // API Client
-export * from './api';
+export * from "./api";
 
 // Context Providers
-export * from './context';
+export * from "./context";
 
 // UI Components
-export * from './components/ui';
+export * from "./components/ui";
 
-// Components will be exported here as they are created
-// export * from './components/workspace';
-// export * from './components/modals';
-// export * from './components/tabs';
+// Workspace Components
+export * from "./components/workspace";
 
-// Hooks will be exported here as they are created
-// export * from './hooks';
+// Hooks
+export * from "./hooks";
