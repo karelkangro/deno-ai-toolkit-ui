@@ -6,6 +6,7 @@ export interface ModalProps {
   title: string;
   children: React.ReactNode;
   showCloseButton?: boolean;
+  closeButtonLabel?: string;
 }
 
 export const Modal = ({
@@ -14,6 +15,7 @@ export const Modal = ({
   title,
   children,
   showCloseButton = true,
+  closeButtonLabel = "Close",
 }: ModalProps) => {
   const modalId = useId();
 
@@ -36,7 +38,7 @@ export const Modal = ({
         {showCloseButton && (
           <div className="modal-action">
             <button className="btn" onClick={onClose}>
-              Close
+              {closeButtonLabel}
             </button>
           </div>
         )}

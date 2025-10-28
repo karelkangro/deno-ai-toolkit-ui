@@ -7,6 +7,13 @@ export interface WorkspaceCardProps {
   formatDate: (dateString: string) => string;
   getAgentTypeLabel: (agentType: AgentType) => string;
   logoUrl?: string;
+  labels: {
+    noWorkspaceFound: string;
+    agent: string;
+    created: string;
+    edit: string;
+    open: string;
+  };
 }
 
 export const WorkspaceCard = ({
@@ -16,11 +23,12 @@ export const WorkspaceCard = ({
   formatDate,
   getAgentTypeLabel,
   logoUrl,
+  labels,
 }: WorkspaceCardProps) => {
   if (!workspace || !workspace.name || !workspace.description) {
     return (
       <div className="card card-side bg-base-100 w-full max-w-2xl">
-        <h1>No workspace found</h1>
+        <h1>{labels.noWorkspaceFound}</h1>
       </div>
     );
   }
@@ -39,14 +47,14 @@ export const WorkspaceCard = ({
         <div className="stats stats-vertical shadow-sm mb-4">
           {workspace.agentType && (
             <div className="stat">
-              <div className="stat-title">Agent</div>
+              <div className="stat-title">{labels.agent}</div>
               <div className="stat-value text-sm">
                 {getAgentTypeLabel(workspace.agentType)}
               </div>
             </div>
           )}
           <div className="stat">
-            <div className="stat-title">Created</div>
+            <div className="stat-title">{labels.created}</div>
             <div className="stat-value text-sm">
               {formatDate(workspace.createdAt)}
             </div>
@@ -55,13 +63,13 @@ export const WorkspaceCard = ({
 
         <div className="justify-end card-actions">
           <button onClick={() => onEdit(workspace)} className="btn btn-warning">
-            Edit
+            {labels.edit}
           </button>
           <button
             onClick={() => onOpen(workspace.id)}
             className="btn btn-primary"
           >
-            Open
+            {labels.open}
           </button>
         </div>
       </div>

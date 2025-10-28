@@ -17,25 +17,25 @@ export interface WorkspaceSetupProps {
   filesCount?: number;
   embeddedCount?: number;
   onTabChange?: (tab: string) => void;
-  labels?: {
-    title?: string;
-    description?: string;
-    filesStep?: string;
-    embeddingsStep?: string;
-    filesTitle?: string;
-    filesComplete?: string;
-    filesIncomplete?: string;
-    filesView?: string;
-    filesUpload?: string;
-    embeddingsTitle?: string;
-    embeddingsComplete?: string;
-    embeddingsIncomplete?: string;
-    embeddingsRequiresFiles?: string;
-    embeddingsView?: string;
-    embeddingsProcess?: string;
-    embeddingsLocked?: string;
-    readyTitle?: string;
-    readyDescription?: string;
+  labels: {
+    title: string;
+    description: string;
+    filesStep: string;
+    embeddingsStep: string;
+    filesTitle: string;
+    filesComplete: string;
+    filesIncomplete: string;
+    filesView: string;
+    filesUpload: string;
+    embeddingsTitle: string;
+    embeddingsComplete: string;
+    embeddingsIncomplete: string;
+    embeddingsRequiresFiles: string;
+    embeddingsView: string;
+    embeddingsProcess: string;
+    embeddingsLocked: string;
+    readyTitle: string;
+    readyDescription: string;
   };
 }
 
@@ -43,30 +43,8 @@ export const WorkspaceSetup = ({
   filesCount = 0,
   embeddedCount = 0,
   onTabChange,
-  labels = {},
+  labels,
 }: WorkspaceSetupProps) => {
-  const defaultLabels = {
-    title: "Workspace Setup",
-    description: "Complete these steps to set up your workspace",
-    filesStep: "Files",
-    embeddingsStep: "Embeddings",
-    filesTitle: "Upload Files",
-    filesComplete: "Files uploaded",
-    filesIncomplete: "No files uploaded",
-    filesView: "View",
-    filesUpload: "Upload",
-    embeddingsTitle: "Process Embeddings",
-    embeddingsComplete: "Embeddings processed",
-    embeddingsIncomplete: "Embeddings pending",
-    embeddingsRequiresFiles: "Upload files first",
-    embeddingsView: "View",
-    embeddingsProcess: "Process",
-    embeddingsLocked: "Locked",
-    readyTitle: "Workspace Ready",
-    readyDescription: "Your workspace is fully configured and ready to use",
-    ...labels,
-  };
-
   // Determine step statuses
   const hasFiles = filesCount > 0;
   const hasEmbeddings = embeddedCount > 0;
@@ -90,9 +68,9 @@ export const WorkspaceSetup = ({
     <div className="bg-white rounded-xl border border-gray-200 p-6">
       <div className="mb-6">
         <h2 className="text-xl font-semibold text-gray-900 mb-2">
-          {defaultLabels.title}
+          {labels.title}
         </h2>
-        <p className="text-gray-600">{defaultLabels.description}</p>
+        <p className="text-gray-600">{labels.description}</p>
       </div>
 
       <div className="mb-6">
@@ -100,12 +78,12 @@ export const WorkspaceSetup = ({
           <li
             className={`step ${isFilesComplete ? "step-primary" : "step-neutral"}`}
           >
-            {defaultLabels.filesStep}
+            {labels.filesStep}
           </li>
           <li
             className={`step ${isEmbeddingsComplete ? "step-primary" : isFilesComplete ? "step-neutral" : "step-disabled"}`}
           >
-            {defaultLabels.embeddingsStep}
+            {labels.embeddingsStep}
           </li>
         </ul>
       </div>
@@ -152,13 +130,11 @@ export const WorkspaceSetup = ({
                   )}
                 </div>
                 <div>
-                  <h3 className="font-medium text-sm">
-                    {defaultLabels.filesTitle}
-                  </h3>
+                  <h3 className="font-medium text-sm">{labels.filesTitle}</h3>
                   <p className="text-xs text-gray-500">
                     {isFilesComplete
-                      ? `${filesCount} ${defaultLabels.filesComplete}`
-                      : defaultLabels.filesIncomplete}
+                      ? `${filesCount} ${labels.filesComplete}`
+                      : labels.filesIncomplete}
                   </p>
                 </div>
               </div>
@@ -166,9 +142,7 @@ export const WorkspaceSetup = ({
                 onClick={handleFilesClick}
                 className={`btn btn-sm ${isFilesComplete ? "btn-outline" : "btn-primary"}`}
               >
-                {isFilesComplete
-                  ? defaultLabels.filesView
-                  : defaultLabels.filesUpload}
+                {isFilesComplete ? labels.filesView : labels.filesUpload}
               </button>
             </div>
           </div>
@@ -218,14 +192,14 @@ export const WorkspaceSetup = ({
                 </div>
                 <div>
                   <h3 className="font-medium text-sm">
-                    {defaultLabels.embeddingsTitle}
+                    {labels.embeddingsTitle}
                   </h3>
                   <p className="text-xs text-gray-500">
                     {isEmbeddingsComplete
-                      ? `${embeddedCount} ${defaultLabels.embeddingsComplete}`
+                      ? `${embeddedCount} ${labels.embeddingsComplete}`
                       : hasFiles
-                        ? defaultLabels.embeddingsIncomplete
-                        : defaultLabels.embeddingsRequiresFiles}
+                        ? labels.embeddingsIncomplete
+                        : labels.embeddingsRequiresFiles}
                   </p>
                 </div>
               </div>
@@ -235,10 +209,10 @@ export const WorkspaceSetup = ({
                 className={`btn btn-sm ${!hasFiles ? "btn-disabled" : isEmbeddingsComplete ? "btn-outline" : "btn-primary"}`}
               >
                 {!hasFiles
-                  ? defaultLabels.embeddingsLocked
+                  ? labels.embeddingsLocked
                   : isEmbeddingsComplete
-                    ? defaultLabels.embeddingsView
-                    : defaultLabels.embeddingsProcess}
+                    ? labels.embeddingsView
+                    : labels.embeddingsProcess}
               </button>
             </div>
           </div>
@@ -256,10 +230,8 @@ export const WorkspaceSetup = ({
               />
             </svg>
             <div>
-              <h3 className="font-semibold">{defaultLabels.readyTitle}</h3>
-              <p className="text-sm opacity-90">
-                {defaultLabels.readyDescription}
-              </p>
+              <h3 className="font-semibold">{labels.readyTitle}</h3>
+              <p className="text-sm opacity-90">{labels.readyDescription}</p>
             </div>
           </div>
         </div>

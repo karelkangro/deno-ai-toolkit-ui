@@ -11,7 +11,14 @@ export interface WorkspaceListProps {
   getAgentTypeLabel: (agentType: AgentType) => string;
   isCreating?: boolean;
   logoUrl?: string;
-  emptyMessage?: string;
+  labels: {
+    noWorkspaceFound: string;
+    agent: string;
+    created: string;
+    edit: string;
+    open: string;
+    emptyMessage: string;
+  };
 }
 
 export const WorkspaceList = ({
@@ -22,12 +29,14 @@ export const WorkspaceList = ({
   getAgentTypeLabel,
   isCreating = false,
   logoUrl,
-  emptyMessage = "No workspaces found",
+  labels,
 }: WorkspaceListProps) => {
   if (workspaces.length === 0 && !isCreating) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-500 dark:text-gray-400">{emptyMessage}</p>
+        <p className="text-gray-500 dark:text-gray-400">
+          {labels.emptyMessage}
+        </p>
       </div>
     );
   }
@@ -43,6 +52,7 @@ export const WorkspaceList = ({
             formatDate={formatDate}
             getAgentTypeLabel={getAgentTypeLabel}
             logoUrl={logoUrl}
+            labels={labels}
           />
         </li>
       ))}

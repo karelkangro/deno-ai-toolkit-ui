@@ -25,18 +25,18 @@ export interface WorkspaceEmbeddingsProps {
   onRefresh?: () => void;
   onRemoveEmbedding?: (fileId: string) => Promise<void>;
   isRemoving?: boolean;
-  labels?: {
-    title?: string;
-    description?: string;
-    refresh?: string;
-    noEmbeddedFiles?: string;
-    uploadAndEmbed?: string;
-    embedded?: string;
-    removeEmbedding?: string;
-    confirmRemove?: string;
-    cancel?: string;
-    delete?: string;
-    vectors?: string;
+  labels: {
+    title: string;
+    description: string;
+    refresh: string;
+    noEmbeddedFiles: string;
+    uploadAndEmbed: string;
+    embedded: string;
+    removeEmbedding: string;
+    confirmRemove: string;
+    cancel: string;
+    delete: string;
+    vectors: string;
   };
 }
 
@@ -46,27 +46,12 @@ export const WorkspaceEmbeddings = ({
   onRefresh,
   onRemoveEmbedding,
   isRemoving = false,
-  labels = {},
+  labels,
 }: WorkspaceEmbeddingsProps) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [fileToDelete, setFileToDelete] = useState<KnowledgeBaseFile | null>(
     null,
   );
-
-  const defaultLabels = {
-    title: "Vector Embeddings",
-    description: "embedded documents",
-    refresh: "Refresh",
-    noEmbeddedFiles: "No embedded files",
-    uploadAndEmbed: "Upload and embed files to get started",
-    embedded: "Embedded",
-    removeEmbedding: "Remove Embedding",
-    confirmRemove: "Are you sure you want to remove the embedding for",
-    cancel: "Cancel",
-    delete: "Delete",
-    vectors: "vectors",
-    ...labels,
-  };
 
   const embeddedFiles = embedStatus?.embedded || [];
   const counts = embedStatus?.counts || { embedded: 0, total: 0 };
@@ -123,9 +108,9 @@ export const WorkspaceEmbeddings = ({
     <div>
       <div className="flex justify-between items-center mb-6">
         <div>
-          <h3 className="text-lg font-semibold">{defaultLabels.title}</h3>
+          <h3 className="text-lg font-semibold">{labels.title}</h3>
           <p className="text-sm text-base-content/60 mt-1">
-            {counts.embedded} {defaultLabels.description} ({counts.total} total)
+            {counts.embedded} {labels.description} ({counts.total} total)
           </p>
         </div>
         {onRefresh && (
@@ -147,7 +132,7 @@ export const WorkspaceEmbeddings = ({
                 d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
               />
             </svg>
-            {defaultLabels.refresh}
+            {labels.refresh}
           </button>
         )}
       </div>
@@ -170,10 +155,10 @@ export const WorkspaceEmbeddings = ({
             </svg>
           </div>
           <p className="text-base-content/70 font-medium">
-            {defaultLabels.noEmbeddedFiles}
+            {labels.noEmbeddedFiles}
           </p>
           <p className="text-sm text-base-content/50 mt-1">
-            {defaultLabels.uploadAndEmbed}
+            {labels.uploadAndEmbed}
           </p>
         </div>
       ) : (
@@ -241,7 +226,7 @@ export const WorkspaceEmbeddings = ({
                         <div className="mt-2">
                           <span className="badge badge-sm badge-primary badge-outline">
                             {String(file.metadata["chunks"] as number | string)}{" "}
-                            {defaultLabels.vectors}
+                            {labels.vectors}
                           </span>
                         </div>
                       )}
@@ -250,14 +235,14 @@ export const WorkspaceEmbeddings = ({
 
                   <div className="flex items-center gap-2">
                     <span className="badge badge-success badge-sm">
-                      {defaultLabels.embedded}
+                      {labels.embedded}
                     </span>
                     {onRemoveEmbedding && (
                       <button
                         onClick={() => handleRemoveEmbedding(file)}
                         disabled={isRemoving}
                         className="btn btn-sm btn-ghost btn-circle text-error hover:bg-error/10"
-                        title={defaultLabels.removeEmbedding}
+                        title={labels.removeEmbedding}
                       >
                         {isRemoving ? (
                           <span className="loading loading-spinner loading-xs"></span>
@@ -289,10 +274,8 @@ export const WorkspaceEmbeddings = ({
       {deleteModalOpen && (
         <dialog open className="modal modal-open">
           <div className="modal-box">
-            <h3 className="font-bold text-lg mb-4">
-              {defaultLabels.removeEmbedding}
-            </h3>
-            <p className="py-4">{defaultLabels.confirmRemove}</p>
+            <h3 className="font-bold text-lg mb-4">{labels.removeEmbedding}</h3>
+            <p className="py-4">{labels.confirmRemove}</p>
             <p className="text-sm text-base-content/70 mb-4">
               <strong>{fileToDelete?.name}</strong>
             </p>
@@ -302,7 +285,7 @@ export const WorkspaceEmbeddings = ({
                 className="btn btn-ghost"
                 disabled={isRemoving}
               >
-                {defaultLabels.cancel}
+                {labels.cancel}
               </button>
               <button
                 onClick={confirmRemoveEmbedding}
@@ -312,7 +295,7 @@ export const WorkspaceEmbeddings = ({
                 {isRemoving && (
                   <span className="loading loading-spinner loading-sm"></span>
                 )}
-                {defaultLabels.delete}
+                {labels.delete}
               </button>
             </div>
           </div>

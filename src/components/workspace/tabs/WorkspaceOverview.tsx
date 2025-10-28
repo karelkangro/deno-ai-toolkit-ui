@@ -11,27 +11,19 @@ export interface Workspace {
 export interface WorkspaceOverviewProps {
   workspace: Workspace;
   agentTypeLabels?: Record<string, string>;
-  labels?: {
-    workspaceInformation?: string;
-    agentType?: string;
-    created?: string;
-    lastUpdated?: string;
+  labels: {
+    workspaceInformation: string;
+    agentType: string;
+    created: string;
+    lastUpdated: string;
   };
 }
 
 export const WorkspaceOverview = ({
   workspace,
   agentTypeLabels = {},
-  labels = {},
+  labels,
 }: WorkspaceOverviewProps) => {
-  const defaultLabels = {
-    workspaceInformation: "Workspace Information",
-    agentType: "Agent Type",
-    created: "Created",
-    lastUpdated: "Last Updated",
-    ...labels,
-  };
-
   const formatAgentType = (agentType: string) => {
     return agentTypeLabels[agentType] || agentType;
   };
@@ -40,29 +32,23 @@ export const WorkspaceOverview = ({
     <div className="space-y-6">
       <div>
         <h3 className="text-lg font-semibold text-gray-900 mb-4">
-          {defaultLabels.workspaceInformation}
+          {labels.workspaceInformation}
         </h3>
         <div className="bg-gray-50 rounded-lg p-4 space-y-3">
           <div className="flex justify-between">
-            <span className="text-sm text-gray-600">
-              {defaultLabels.agentType}
-            </span>
+            <span className="text-sm text-gray-600">{labels.agentType}</span>
             <span className="text-sm font-medium text-gray-900">
               {formatAgentType(workspace.agentType)}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm text-gray-600">
-              {defaultLabels.created}
-            </span>
+            <span className="text-sm text-gray-600">{labels.created}</span>
             <span className="text-sm font-medium text-gray-900">
               {new Date(workspace.createdAt).toLocaleDateString()}
             </span>
           </div>
           <div className="flex justify-between">
-            <span className="text-sm text-gray-600">
-              {defaultLabels.lastUpdated}
-            </span>
+            <span className="text-sm text-gray-600">{labels.lastUpdated}</span>
             <span className="text-sm font-medium text-gray-900">
               {new Date(workspace.updatedAt).toLocaleDateString()}
             </span>

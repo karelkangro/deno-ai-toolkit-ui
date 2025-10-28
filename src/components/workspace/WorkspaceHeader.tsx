@@ -14,14 +14,14 @@ export interface WorkspaceHeaderProps {
   workspace: Workspace;
   agentTypeLabels?: Record<string, string>;
   backUrl?: string;
-  backButtonTitle?: string;
+  backButtonTitle: string;
 }
 
 export const WorkspaceHeader = ({
   workspace,
   agentTypeLabels = {},
   backUrl = "/admin/workspaces",
-  backButtonTitle = "Back to Workspaces",
+  backButtonTitle,
 }: WorkspaceHeaderProps) => {
   const navigate = useNavigate();
 

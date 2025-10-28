@@ -17,15 +17,15 @@ export interface CreateWorkspaceModalProps {
   onClose: () => void;
   onCreate: (data: CreateWorkspaceRequest) => void;
   agentTypes?: AgentType[];
-  title?: string;
-  labels?: {
-    workspaceName?: string;
-    enterWorkspaceName?: string;
-    description?: string;
-    enterDescription?: string;
-    agentType?: string;
-    cancel?: string;
-    create?: string;
+  title: string;
+  labels: {
+    workspaceName: string;
+    enterWorkspaceName: string;
+    description: string;
+    enterDescription: string;
+    agentType: string;
+    cancel: string;
+    create: string;
   };
 }
 
@@ -34,25 +34,14 @@ export const CreateWorkspaceModal = ({
   onClose,
   onCreate,
   agentTypes = [],
-  title = "Create Workspace",
-  labels = {},
+  title,
+  labels,
 }: CreateWorkspaceModalProps) => {
   const [formData, setFormData] = useState<CreateWorkspaceRequest>({
     name: "",
     description: "",
     agentType: agentTypes[0]?.value || "",
   });
-
-  const defaultLabels = {
-    workspaceName: "Workspace Name",
-    enterWorkspaceName: "Enter workspace name",
-    description: "Description",
-    enterDescription: "Enter description",
-    agentType: "Agent Type",
-    cancel: "Cancel",
-    create: "Create",
-    ...labels,
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,21 +61,21 @@ export const CreateWorkspaceModal = ({
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="form-control">
           <label className="label">
-            <span className="label-text">{defaultLabels.workspaceName}</span>
+            <span className="label-text">{labels.workspaceName}</span>
           </label>
           <input
             type="text"
             value={formData.name}
             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
             className="input input-bordered w-full"
-            placeholder={defaultLabels.enterWorkspaceName}
+            placeholder={labels.enterWorkspaceName}
             required
           />
         </div>
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text">{defaultLabels.description}</span>
+            <span className="label-text">{labels.description}</span>
           </label>
           <textarea
             value={formData.description}
@@ -94,13 +83,13 @@ export const CreateWorkspaceModal = ({
               setFormData({ ...formData, description: e.target.value })
             }
             className="textarea textarea-bordered w-full h-20"
-            placeholder={defaultLabels.enterDescription}
+            placeholder={labels.enterDescription}
           />
         </div>
 
         <div className="form-control">
           <label className="label">
-            <span className="label-text">{defaultLabels.agentType}</span>
+            <span className="label-text">{labels.agentType}</span>
           </label>
           <select
             value={formData.agentType}
@@ -119,10 +108,10 @@ export const CreateWorkspaceModal = ({
 
         <div className="modal-action">
           <button type="button" onClick={onClose} className="btn btn-ghost">
-            {defaultLabels.cancel}
+            {labels.cancel}
           </button>
           <button type="submit" className="btn btn-primary">
-            {defaultLabels.create}
+            {labels.create}
           </button>
         </div>
       </form>

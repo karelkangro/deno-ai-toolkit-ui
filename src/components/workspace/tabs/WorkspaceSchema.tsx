@@ -18,29 +18,29 @@ export interface WorkspaceSchemaProps {
   isLoading?: boolean;
   onCreateSchema?: (schema: Partial<RuleSchema>) => void;
   onEditSchema?: () => void;
-  labels?: {
-    noSchemaTitle?: string;
-    noSchemaDescription?: string;
-    createNewSchema?: string;
-    schemaName?: string;
-    schemaNamePlaceholder?: string;
-    schemaDescription?: string;
-    schemaDescriptionPlaceholder?: string;
-    schemaVersion?: string;
-    schemaVersionPlaceholder?: string;
-    cancel?: string;
-    createSchema?: string;
-    editSchema?: string;
-    schemaInformation?: string;
-    version?: string;
-    fieldCount?: string;
-    schemaFields?: string;
-    required?: string;
-    allowedValues?: string;
-    schemaValidation?: string;
-    allRulesConform?: string;
-    loadingWorkspace?: string;
-    createSchemaComingSoon?: string;
+  labels: {
+    noSchemaTitle: string;
+    noSchemaDescription: string;
+    createNewSchema: string;
+    schemaName: string;
+    schemaNamePlaceholder: string;
+    schemaDescription: string;
+    schemaDescriptionPlaceholder: string;
+    schemaVersion: string;
+    schemaVersionPlaceholder: string;
+    cancel: string;
+    createSchema: string;
+    editSchema: string;
+    schemaInformation: string;
+    version: string;
+    fieldCount: string;
+    schemaFields: string;
+    required: string;
+    allowedValues: string;
+    schemaValidation: string;
+    allRulesConform: string;
+    loadingWorkspace: string;
+    createSchemaComingSoon: string;
   };
 }
 
@@ -49,35 +49,8 @@ export const WorkspaceSchema = ({
   isLoading = false,
   onCreateSchema,
   onEditSchema,
-  labels = {},
+  labels,
 }: WorkspaceSchemaProps) => {
-  const defaultLabels = {
-    noSchemaTitle: "No Schema Defined",
-    noSchemaDescription:
-      "Create a schema to define the structure of your workspace rules",
-    createNewSchema: "Create New Schema",
-    schemaName: "Schema Name",
-    schemaNamePlaceholder: "Enter schema name",
-    schemaDescription: "Description",
-    schemaDescriptionPlaceholder: "Enter schema description",
-    schemaVersion: "Version",
-    schemaVersionPlaceholder: "1.0.0",
-    cancel: "Cancel",
-    createSchema: "Create Schema",
-    editSchema: "Edit Schema",
-    schemaInformation: "Schema Information",
-    version: "Version",
-    fieldCount: "Fields",
-    schemaFields: "Schema Fields",
-    required: "Required",
-    allowedValues: "Allowed Values",
-    schemaValidation: "Schema Validation",
-    allRulesConform: "All rules must conform to this schema",
-    loadingWorkspace: "Loading workspace...",
-    createSchemaComingSoon: "Create schema functionality coming soon",
-    ...labels,
-  };
-
   const handleCreateSchema = () => {
     if (onCreateSchema) {
       onCreateSchema({});
@@ -98,7 +71,7 @@ export const WorkspaceSchema = ({
       <div className="flex items-center justify-center py-12">
         <div className="text-center">
           <div className="loading loading-spinner loading-lg text-primary"></div>
-          <p className="text-gray-600 mt-4">{defaultLabels.loadingWorkspace}</p>
+          <p className="text-gray-600 mt-4">{labels.loadingWorkspace}</p>
         </div>
       </div>
     );
@@ -125,46 +98,46 @@ export const WorkspaceSchema = ({
             </svg>
           </div>
           <h3 className="text-xl font-semibold text-gray-900 mb-2">
-            {defaultLabels.noSchemaTitle}
+            {labels.noSchemaTitle}
           </h3>
-          <p className="text-gray-600">{defaultLabels.noSchemaDescription}</p>
+          <p className="text-gray-600">{labels.noSchemaDescription}</p>
         </div>
 
         {/* Schema Creation Form */}
         <div className="bg-white border border-gray-200 rounded-lg p-6">
           <h4 className="text-lg font-semibold text-gray-900 mb-4">
-            {defaultLabels.createNewSchema}
+            {labels.createNewSchema}
           </h4>
 
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {defaultLabels.schemaName}
+                {labels.schemaName}
               </label>
               <input
                 type="text"
-                placeholder={defaultLabels.schemaNamePlaceholder}
+                placeholder={labels.schemaNamePlaceholder}
                 className="input input-bordered w-full"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {defaultLabels.schemaDescription}
+                {labels.schemaDescription}
               </label>
               <textarea
-                placeholder={defaultLabels.schemaDescriptionPlaceholder}
+                placeholder={labels.schemaDescriptionPlaceholder}
                 className="textarea textarea-bordered w-full h-24"
               />
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                {defaultLabels.schemaVersion}
+                {labels.schemaVersion}
               </label>
               <input
                 type="text"
-                placeholder={defaultLabels.schemaVersionPlaceholder}
+                placeholder={labels.schemaVersionPlaceholder}
                 className="input input-bordered w-full"
               />
             </div>
@@ -172,10 +145,10 @@ export const WorkspaceSchema = ({
 
           <div className="flex justify-end gap-3 mt-6">
             <button onClick={handleCreateSchema} className="btn btn-outline">
-              {defaultLabels.cancel}
+              {labels.cancel}
             </button>
             <button onClick={handleCreateSchema} className="btn btn-primary">
-              {defaultLabels.createSchema}
+              {labels.createSchema}
             </button>
           </div>
         </div>
@@ -195,7 +168,7 @@ export const WorkspaceSchema = ({
             {schemaData.schemaName}
           </h3>
           <p className="text-sm text-gray-600 mt-1">
-            {schemaData.description || defaultLabels.schemaDescription}
+            {schemaData.description || labels.schemaDescription}
           </p>
         </div>
         <button
@@ -215,7 +188,7 @@ export const WorkspaceSchema = ({
               d="M12 4v16m8-8H4"
             />
           </svg>
-          {defaultLabels.editSchema}
+          {labels.editSchema}
         </button>
       </div>
 
@@ -238,30 +211,26 @@ export const WorkspaceSchema = ({
           </div>
           <div className="flex-1">
             <h4 className="text-lg font-semibold text-gray-900 mb-2">
-              {defaultLabels.schemaInformation}
+              {labels.schemaInformation}
             </h4>
             <p className="text-sm text-gray-700 mb-4">
-              {schemaData.description || defaultLabels.schemaDescription}
+              {schemaData.description || labels.schemaDescription}
             </p>
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-white rounded-lg p-3">
-                <p className="text-xs text-gray-500">
-                  {defaultLabels.schemaName}
-                </p>
+                <p className="text-xs text-gray-500">{labels.schemaName}</p>
                 <p className="text-sm font-medium text-gray-900 mt-1">
                   {schemaData.schemaName}
                 </p>
               </div>
               <div className="bg-white rounded-lg p-3">
-                <p className="text-xs text-gray-500">{defaultLabels.version}</p>
+                <p className="text-xs text-gray-500">{labels.version}</p>
                 <p className="text-sm font-medium text-gray-900 mt-1">
                   {schemaData.schemaVersion}
                 </p>
               </div>
               <div className="bg-white rounded-lg p-3">
-                <p className="text-xs text-gray-500">
-                  {defaultLabels.fieldCount}
-                </p>
+                <p className="text-xs text-gray-500">{labels.fieldCount}</p>
                 <p className="text-sm font-medium text-gray-900 mt-1">
                   {fields.length}
                 </p>
@@ -272,9 +241,7 @@ export const WorkspaceSchema = ({
       </div>
 
       <div className="space-y-4">
-        <h4 className="font-semibold text-gray-900">
-          {defaultLabels.schemaFields}
-        </h4>
+        <h4 className="font-semibold text-gray-900">{labels.schemaFields}</h4>
 
         <div className="border border-gray-200 rounded-lg divide-y divide-gray-200">
           {fields.map((field) => (
@@ -293,7 +260,7 @@ export const WorkspaceSchema = ({
                     </span>
                     {field.required && (
                       <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-700">
-                        {defaultLabels.required}
+                        {labels.required}
                       </span>
                     )}
                   </div>
@@ -301,7 +268,7 @@ export const WorkspaceSchema = ({
                   {field.enumValues && (
                     <div className="mt-2">
                       <p className="text-xs text-gray-500 mb-1">
-                        {defaultLabels.allowedValues}
+                        {labels.allowedValues}
                       </p>
                       <div className="flex flex-wrap gap-1">
                         {field.enumValues.map((value) => (
@@ -339,11 +306,9 @@ export const WorkspaceSchema = ({
           </svg>
           <div>
             <h5 className="text-sm font-medium text-yellow-900 mb-1">
-              {defaultLabels.schemaValidation}
+              {labels.schemaValidation}
             </h5>
-            <p className="text-sm text-yellow-800">
-              {defaultLabels.allRulesConform}
-            </p>
+            <p className="text-sm text-yellow-800">{labels.allRulesConform}</p>
           </div>
         </div>
       </div>

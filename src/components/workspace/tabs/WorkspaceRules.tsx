@@ -1,27 +1,15 @@
 export interface WorkspaceRulesProps {
   onAddRule?: () => void;
-  labels?: {
-    workspaceRules?: string;
-    manageRules?: string;
-    addRule?: string;
-    rulesComingSoon?: string;
-    configureRules?: string;
+  labels: {
+    workspaceRules: string;
+    manageRules: string;
+    addRule: string;
+    rulesComingSoon: string;
+    configureRules: string;
   };
 }
 
-export const WorkspaceRules = ({
-  onAddRule,
-  labels = {},
-}: WorkspaceRulesProps) => {
-  const defaultLabels = {
-    workspaceRules: "Workspace Rules",
-    manageRules: "Manage rules and policies for this workspace",
-    addRule: "Add Rule",
-    rulesComingSoon: "Rules management coming soon",
-    configureRules: "Configure workspace rules and policies here",
-    ...labels,
-  };
-
+export const WorkspaceRules = ({ onAddRule, labels }: WorkspaceRulesProps) => {
   const handleAddRule = () => {
     if (onAddRule) {
       onAddRule();
@@ -34,11 +22,9 @@ export const WorkspaceRules = ({
       <div className="flex justify-between items-center mb-6">
         <div>
           <h3 className="text-lg font-semibold text-gray-900">
-            {defaultLabels.workspaceRules}
+            {labels.workspaceRules}
           </h3>
-          <p className="text-sm text-gray-600 mt-1">
-            {defaultLabels.manageRules}
-          </p>
+          <p className="text-sm text-gray-600 mt-1">{labels.manageRules}</p>
         </div>
         <button
           onClick={handleAddRule}
@@ -57,7 +43,7 @@ export const WorkspaceRules = ({
               d="M12 4v16m8-8H4"
             />
           </svg>
-          {defaultLabels.addRule}
+          {labels.addRule}
         </button>
       </div>
 
@@ -77,12 +63,8 @@ export const WorkspaceRules = ({
             />
           </svg>
         </div>
-        <p className="text-gray-600 font-medium">
-          {defaultLabels.rulesComingSoon}
-        </p>
-        <p className="text-sm text-gray-500 mt-1">
-          {defaultLabels.configureRules}
-        </p>
+        <p className="text-gray-600 font-medium">{labels.rulesComingSoon}</p>
+        <p className="text-sm text-gray-500 mt-1">{labels.configureRules}</p>
       </div>
     </div>
   );

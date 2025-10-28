@@ -30,14 +30,14 @@ export interface UpdateWorkspaceModalProps {
   onDelete: (workspace: Workspace) => void;
   workspace: Workspace | null;
   agentTypes?: AgentType[];
-  title?: string;
-  labels?: {
-    name?: string;
-    description?: string;
-    agentType?: string;
-    delete?: string;
-    cancel?: string;
-    update?: string;
+  title: string;
+  labels: {
+    name: string;
+    description: string;
+    agentType: string;
+    delete: string;
+    cancel: string;
+    update: string;
   };
 }
 
@@ -48,8 +48,8 @@ export const UpdateWorkspaceModal = ({
   onDelete,
   workspace,
   agentTypes = [],
-  title = "Update Workspace",
-  labels = {},
+  title,
+  labels,
 }: UpdateWorkspaceModalProps) => {
   // Initialize form data directly from workspace prop
   // Parent component should provide key={workspace.id} to reset state
@@ -59,16 +59,6 @@ export const UpdateWorkspaceModal = ({
     description: workspace?.description || "",
     agentType: workspace?.agentType || "",
   }));
-
-  const defaultLabels = {
-    name: "Name",
-    description: "Description",
-    agentType: "Agent Type",
-    delete: "Delete",
-    cancel: "Cancel",
-    update: "Update",
-    ...labels,
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,7 +80,7 @@ export const UpdateWorkspaceModal = ({
       <form onSubmit={handleSubmit}>
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">{defaultLabels.name}</span>
+            <span className="label-text">{labels.name}</span>
           </label>
           <input
             type="text"
@@ -103,7 +93,7 @@ export const UpdateWorkspaceModal = ({
 
         <div className="form-control mb-4">
           <label className="label">
-            <span className="label-text">{defaultLabels.description}</span>
+            <span className="label-text">{labels.description}</span>
           </label>
           <textarea
             value={formData.description || ""}
@@ -116,7 +106,7 @@ export const UpdateWorkspaceModal = ({
 
         <div className="form-control mb-6">
           <label className="label">
-            <span className="label-text">{defaultLabels.agentType}</span>
+            <span className="label-text">{labels.agentType}</span>
           </label>
           <select
             value={formData.agentType || ""}
@@ -139,13 +129,13 @@ export const UpdateWorkspaceModal = ({
             onClick={handleDelete}
             className="btn btn-error mr-auto"
           >
-            {defaultLabels.delete}
+            {labels.delete}
           </button>
           <button type="button" onClick={onClose} className="btn btn-ghost">
-            {defaultLabels.cancel}
+            {labels.cancel}
           </button>
           <button type="submit" className="btn btn-primary">
-            {defaultLabels.update}
+            {labels.update}
           </button>
         </div>
       </form>

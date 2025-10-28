@@ -24,26 +24,26 @@ export interface WorkspaceFilesProps {
     onFilesChange?: (files: File[]) => Promise<void>;
     disabled?: boolean;
   }>;
-  labels?: {
-    title?: string;
-    description?: string;
-    name?: string;
-    type?: string;
-    status?: string;
-    date?: string;
-    actions?: string;
-    view?: string;
-    embed?: string;
-    delete?: string;
-    noFilesFound?: string;
-    uploadFirstFile?: string;
-    uploadingFiles?: string;
-    deleteConfirmTitle?: string;
-    confirmDeleteFile?: string;
-    cancel?: string;
-    uploadedStatus?: string;
-    embeddedStatus?: string;
-    availableStatus?: string;
+  labels: {
+    title: string;
+    description: string;
+    name: string;
+    type: string;
+    status: string;
+    date: string;
+    actions: string;
+    view: string;
+    embed: string;
+    delete: string;
+    noFilesFound: string;
+    uploadFirstFile: string;
+    uploadingFiles: string;
+    deleteConfirmTitle: string;
+    confirmDeleteFile: string;
+    cancel: string;
+    uploadedStatus: string;
+    embeddedStatus: string;
+    availableStatus: string;
   };
 }
 
@@ -57,34 +57,11 @@ export const WorkspaceFiles = ({
   isUploading = false,
   uploadProgress = {},
   FileUploadComponent,
-  labels = {},
+  labels,
 }: WorkspaceFilesProps) => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [documentToDelete, setDocumentToDelete] =
     useState<KnowledgeBaseFile | null>(null);
-
-  const defaultLabels = {
-    title: "Knowledge Base Files",
-    description: "Manage files in your knowledge base",
-    name: "Name",
-    type: "Type",
-    status: "Status",
-    date: "Date",
-    actions: "Actions",
-    view: "View",
-    embed: "Embed",
-    delete: "Delete",
-    noFilesFound: "No files found",
-    uploadFirstFile: "Upload your first file to get started",
-    uploadingFiles: "Uploading files...",
-    deleteConfirmTitle: "Delete File",
-    confirmDeleteFile: "Are you sure you want to delete",
-    cancel: "Cancel",
-    uploadedStatus: "Uploaded",
-    embeddedStatus: "Embedded",
-    availableStatus: "Available",
-    ...labels,
-  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -102,11 +79,11 @@ export const WorkspaceFiles = ({
   const getStatusLabel = (status: string) => {
     switch (status) {
       case "embedded":
-        return defaultLabels.embeddedStatus;
+        return labels.embeddedStatus;
       case "uploaded":
-        return defaultLabels.uploadedStatus;
+        return labels.uploadedStatus;
       case "available":
-        return defaultLabels.availableStatus;
+        return labels.availableStatus;
       default:
         return status;
     }
@@ -152,11 +129,9 @@ export const WorkspaceFiles = ({
       <div className="mb-6">
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-gray-900">
-            {defaultLabels.title}
+            {labels.title}
           </h3>
-          <p className="text-sm text-gray-600 mt-1">
-            {defaultLabels.description}
-          </p>
+          <p className="text-sm text-gray-600 mt-1">{labels.description}</p>
         </div>
       </div>
 
@@ -166,19 +141,19 @@ export const WorkspaceFiles = ({
             <thead>
               <tr className="border-b border-gray-200">
                 <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                  {defaultLabels.name}
+                  {labels.name}
                 </th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                  {defaultLabels.type}
+                  {labels.type}
                 </th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                  {defaultLabels.status}
+                  {labels.status}
                 </th>
                 <th className="text-left py-3 px-4 text-sm font-medium text-gray-600">
-                  {defaultLabels.date}
+                  {labels.date}
                 </th>
                 <th className="text-right py-3 px-4 text-sm font-medium text-gray-600">
-                  {defaultLabels.actions}
+                  {labels.actions}
                 </th>
               </tr>
             </thead>
@@ -237,7 +212,7 @@ export const WorkspaceFiles = ({
                           <button
                             onClick={() => onViewFile(file.id)}
                             className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
-                            title={defaultLabels.view}
+                            title={labels.view}
                           >
                             <svg
                               className="w-5 h-5"
@@ -264,7 +239,7 @@ export const WorkspaceFiles = ({
                           <button
                             onClick={() => handleEmbedFile(file.id)}
                             className="p-1.5 text-gray-400 hover:text-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            title={defaultLabels.embed}
+                            title={labels.embed}
                             disabled={isUploading}
                           >
                             <svg
@@ -286,7 +261,7 @@ export const WorkspaceFiles = ({
                           <button
                             onClick={() => handleDeleteFile(file.id)}
                             className="p-1.5 text-gray-400 hover:text-red-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            title={defaultLabels.delete}
+                            title={labels.delete}
                             disabled={isUploading}
                           >
                             <svg
@@ -329,12 +304,8 @@ export const WorkspaceFiles = ({
               />
             </svg>
           </div>
-          <p className="text-gray-600 font-medium">
-            {defaultLabels.noFilesFound}
-          </p>
-          <p className="text-sm text-gray-500 mt-1">
-            {defaultLabels.uploadFirstFile}
-          </p>
+          <p className="text-gray-600 font-medium">{labels.noFilesFound}</p>
+          <p className="text-sm text-gray-500 mt-1">{labels.uploadFirstFile}</p>
         </div>
       )}
 
@@ -352,7 +323,7 @@ export const WorkspaceFiles = ({
           <div className="flex items-center gap-2 mb-2">
             <div className="loading loading-spinner loading-sm text-blue-600"></div>
             <span className="text-sm font-medium text-blue-900">
-              {defaultLabels.uploadingFiles}
+              {labels.uploadingFiles}
             </span>
           </div>
           {Object.entries(uploadProgress).map(([fileName, progress]) => (
@@ -377,17 +348,17 @@ export const WorkspaceFiles = ({
         <dialog open className="modal modal-open">
           <div className="modal-box">
             <h3 className="font-bold text-lg mb-4">
-              {defaultLabels.deleteConfirmTitle}
+              {labels.deleteConfirmTitle}
             </h3>
             <p className="py-4">
-              {defaultLabels.confirmDeleteFile} "{documentToDelete?.name}"?
+              {labels.confirmDeleteFile} "{documentToDelete?.name}"?
             </p>
             <div className="modal-action">
               <button onClick={cancelDelete} className="btn btn-ghost">
-                {defaultLabels.cancel}
+                {labels.cancel}
               </button>
               <button onClick={confirmDelete} className="btn btn-error">
-                {defaultLabels.delete}
+                {labels.delete}
               </button>
             </div>
           </div>

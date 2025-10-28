@@ -21,23 +21,23 @@ export interface KnowledgeBaseFile {
 export interface WorkspaceStatsProps {
   workspace: Workspace;
   knowledgeBaseFiles: KnowledgeBaseFile[];
-  labels?: {
-    totalFiles?: string;
-    uploaded?: string;
-    embedded?: string;
-    documents?: string;
-    total?: string;
-    inWorkspace?: string;
-    embeddings?: string;
-    vectorDatabase?: string;
-    ready?: string;
+  labels: {
+    totalFiles: string;
+    uploaded: string;
+    embedded: string;
+    documents: string;
+    total: string;
+    inWorkspace: string;
+    embeddings: string;
+    vectorDatabase: string;
+    ready: string;
   };
 }
 
 export const WorkspaceStats = ({
   workspace,
   knowledgeBaseFiles,
-  labels = {},
+  labels,
 }: WorkspaceStatsProps) => {
   const embeddedCount = knowledgeBaseFiles.filter(
     (f) => f.status === "embedded",
@@ -46,26 +46,13 @@ export const WorkspaceStats = ({
     (f) => f.status === "uploaded",
   ).length;
 
-  const defaultLabels = {
-    totalFiles: "Total Files",
-    uploaded: "uploaded",
-    embedded: "embedded",
-    documents: "Documents",
-    total: "total",
-    inWorkspace: "In workspace",
-    embeddings: "Embeddings",
-    vectorDatabase: "Vector database",
-    ready: "Ready",
-    ...labels,
-  };
-
   return (
     <div className="grid grid-cols-3 gap-6 mb-8">
       <div className="bg-white rounded-xl border border-gray-200 p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">
-              {defaultLabels.totalFiles}
+              {labels.totalFiles}
             </p>
             <p className="text-3xl font-bold text-gray-900 mt-2">
               {knowledgeBaseFiles.length}
@@ -89,11 +76,11 @@ export const WorkspaceStats = ({
         </div>
         <div className="mt-4 flex items-center text-sm">
           <span className="text-gray-600">
-            {uploadedCount} {defaultLabels.uploaded}
+            {uploadedCount} {labels.uploaded}
           </span>
           <span className="mx-2 text-gray-400">•</span>
           <span className="text-green-600 font-medium">
-            {embeddedCount} {defaultLabels.embedded}
+            {embeddedCount} {labels.embedded}
           </span>
         </div>
       </div>
@@ -102,7 +89,7 @@ export const WorkspaceStats = ({
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">
-              {defaultLabels.documents}
+              {labels.documents}
             </p>
             <p className="text-3xl font-bold text-gray-900 mt-2">
               {workspace.documentCount || 0}
@@ -126,10 +113,10 @@ export const WorkspaceStats = ({
         </div>
         <div className="mt-4 flex items-center text-sm">
           <span className="text-green-600 font-medium">
-            {workspace.documentCount || 0} {defaultLabels.total}
+            {workspace.documentCount || 0} {labels.total}
           </span>
           <span className="mx-2 text-gray-400">•</span>
-          <span className="text-gray-600">{defaultLabels.inWorkspace}</span>
+          <span className="text-gray-600">{labels.inWorkspace}</span>
         </div>
       </div>
 
@@ -137,7 +124,7 @@ export const WorkspaceStats = ({
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-gray-600">
-              {defaultLabels.embeddings}
+              {labels.embeddings}
             </p>
             <p className="text-3xl font-bold text-gray-900 mt-2">
               {embeddedCount}
@@ -160,11 +147,9 @@ export const WorkspaceStats = ({
           </div>
         </div>
         <div className="mt-4 flex items-center text-sm">
-          <span className="text-gray-600">{defaultLabels.vectorDatabase}</span>
+          <span className="text-gray-600">{labels.vectorDatabase}</span>
           <span className="mx-2 text-gray-400">•</span>
-          <span className="text-green-600 font-medium">
-            {defaultLabels.ready}
-          </span>
+          <span className="text-green-600 font-medium">{labels.ready}</span>
         </div>
       </div>
     </div>
